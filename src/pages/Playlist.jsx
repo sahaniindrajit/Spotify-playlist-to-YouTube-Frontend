@@ -5,25 +5,35 @@ import axios from 'axios'
 import { useState, useEffect } from 'react';
 
 function Playlist() {
-    const [link, SetLink] = useState("k");
+    const [link, SetLink] = useState("");
     const [youtubeAccessToken, setYoutubeAccessToken] = useState(null);
+    const [responseMessage, setResponseMessage] = useState(''); //to show response
+    const [apiCall, setApiCall] = useState(false) //when to show loading
+    const [isLoading, setIsLoading] = useState(false); //When request is under process
 
+    //for geeting token from cookies
     useEffect(() => {
         const token = Cookies.get('youtube_access_token');
         setYoutubeAccessToken(token);
     }, []);
+
 
     const handleChange = (e) => {
         SetLink(e.target.value);
     };
 
 
-
+    //api call to get playlist 
     const handelClick = async () => {
         try {
-            console.log(link)
+            setApiCall(true)
+            setIsLoading(true);
+
+
             if (!youtubeAccessToken) {
-                console.error("No YouTube access token found!");
+                setResponseMessage("No YouTube access token found!");
+                setIsLoading(false);
+                setApiCall(false);
                 return;
             }
 
@@ -31,14 +41,47 @@ function Playlist() {
                 headers: {
                     'youtube_access_token': youtubeAccessToken
                 }
-            })
+            });
+
+
+            if (res.data && (res.data.link || res.data.msg)) {
+                if (res.data.link) {
+                    setResponseMessage(res.data.link);
+                }
+                else {
+                    setResponseMessage(res.data.msg);
+                }
+
+            }
+            else {
+                setResponseMessage("Request successful but no message returned.");
+            }
 
             console.log(res);
         }
         catch (err) {
-            console.log(err)
+            if (err.response && err.response.data && err.response.data.msg) {
+                setResponseMessage(err.response.data.msg);
+            }
+            else {
+                setResponseMessage("An error occurred. Please try again.");
+            }
+            console.error(err);
         }
-    }
+        finally {
+            setApiCall(true)
+            setIsLoading(false);
+        }
+    };
+
+    const isValidUrl = (string) => {
+        try {
+            new URL(string);
+            return true;
+        } catch {
+            return false;
+        }
+    };
 
     return (
         <div className='bg-slate-300 w-full h-screen flex flex-col items-center justify-center'>
@@ -51,9 +94,29 @@ function Playlist() {
                 </div>
             </div>
 
-            <div>
-                <Heading label={"Link to YouTube Playlist"} />
-            </div>
+            {/*for show loading when request is under way */}
+            {apiCall && (
+                isLoading ? (
+                    <Heading label={"Loading... Might take 10 seconds..."} />
+                ) : (
+                    <div>
+                        <Heading label={"Link to YouTube Playlist"} />
+
+                        {responseMessage && (
+                            isValidUrl(responseMessage) ? (
+                                <a className='custom-link' href={responseMessage} target="_blank" rel="noopener noreferrer">
+                                    {responseMessage}
+                                </a>
+                            ) : (
+                                <Heading label={responseMessage}></Heading>
+                            )
+                        )}
+                    </div>
+                )
+            )}
+
+
+
         </div>
     )
 }
