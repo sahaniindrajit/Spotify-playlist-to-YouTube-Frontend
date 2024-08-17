@@ -1,14 +1,11 @@
-import Button from "../component/Button";
+import HeroSection from "../component/HeroSection";
 
 function Home() {
 
 
     return (
         <>
-            <div>Home</div>
-            <Button onClick={() => {
-                window.location.href = 'http://localhost:3000/user/google/auth'; // Backend URL
-            }} />
+            <HeroSection />
         </>
     )
 }
