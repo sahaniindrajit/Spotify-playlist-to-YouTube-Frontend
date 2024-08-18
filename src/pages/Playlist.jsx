@@ -37,7 +37,7 @@ function Playlist() {
                 return;
             }
 
-            const res = await axios.post("http://localhost:3000/user/playlist", { data: link }, {
+            const res = await axios.post("/user/playlist", { data: link }, {
                 headers: {
                     'youtube_access_token': youtubeAccessToken
                 }
