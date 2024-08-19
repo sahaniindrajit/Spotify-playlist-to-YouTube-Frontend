@@ -40,8 +40,10 @@ function Playlist() {
 
             const res = await axios.post(`${API_BASE_URL}/user/playlist`, { data: link }, {
                 headers: {
-                    'youtube_access_token': youtubeAccessToken
-                }
+                    'youtube_access_token': youtubeAccessToken,
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
             });
 
 
