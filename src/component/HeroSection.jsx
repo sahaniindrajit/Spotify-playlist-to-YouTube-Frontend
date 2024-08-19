@@ -11,7 +11,7 @@ const HeroSection = () => {
                 </p>
 
                 <GoogleButton onClick={() => {
-                    window.location.href = 'http://localhost:3000/user/google/auth'; // Backend URL
+                    window.location.href = 'https://spotify-playlist-to-youtube-backend.onrender.com/user/google/auth'; // Backend URL
                 }} />
             </div>
         </section>
