@@ -4,8 +4,8 @@
 **Convert your Spotify playlists to YouTube videos with ease**
 
 ## Description
-This project allows you to take your favorite Spotify playlists and find equivalent YouTube videos. It's perfect for music enthusiasts who want to enjoy their playlists on YouTube.
-[Check out project Backend](https://github.com/sahaniindrajit/Spotify-playlist-to-YouTube-Backend)
+This project allows you to take your favorite Spotify playlists and find equivalent YouTube videos. It's perfect for music enthusiasts who want to enjoy their playlists on YouTube.[Checkout website](https://spotify-playlist-to-youtube-frontend.onrender.com)
+[Checkout Backend source code](https://github.com/sahaniindrajit/Spotify-playlist-to-YouTube-Backend)
 
 # 🚀 Installation and Setup
 
