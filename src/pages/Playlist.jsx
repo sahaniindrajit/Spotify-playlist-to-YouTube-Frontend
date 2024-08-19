@@ -10,6 +10,7 @@ function Playlist() {
     const [responseMessage, setResponseMessage] = useState(''); //to show response
     const [apiCall, setApiCall] = useState(false) //when to show loading
     const [isLoading, setIsLoading] = useState(false); //When request is under process
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
     //for geeting token from cookies
     useEffect(() => {
@@ -37,7 +38,7 @@ function Playlist() {
                 return;
             }
 
-            const res = await axios.post("/user/playlist", { data: link }, {
+            const res = await axios.post(`${API_BASE_URL}/user/playlist`, { data: link }, {
                 headers: {
                     'youtube_access_token': youtubeAccessToken
                 }
